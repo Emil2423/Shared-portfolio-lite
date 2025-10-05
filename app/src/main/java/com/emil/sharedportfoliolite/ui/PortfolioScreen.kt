@@ -8,6 +8,9 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -24,48 +27,65 @@ fun PortfolioScreen(
 ) {
     val users by viewModel.users.observeAsState(emptyList())
     val assets by viewModel.assets.observeAsState(emptyList())
-
     val totalPortfolio = users.sumOf { it.contributionUSD }
 
-    LazyColumn(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
-    ) {
+    var showUserDialog by remember { mutableStateOf(false) }
+    var showAssetDialog by remember { mutableStateOf(false) }
 
-        item {
-            TotalPortfolioCard(totalPortfolio)
+    Scaffold(
+        floatingActionButton = {
+            Column(
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                FloatingActionButton(
+                    onClick = { showUserDialog = true }
+                ) {
+                    Text("+ User")
+                }
+                FloatingActionButton(
+                    onClick = { showAssetDialog = true }
+                ) {
+                    Text("+ Asset")
+                }
+            }
         }
-
-        item {
-            Text(
-                text = "Users",
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(bottom = 8.dp)
-            )
-        }
-
-        items(users) { user ->
-            UserCard(user, totalPortfolio)
-        }
-
-        item {
-            Spacer(modifier = Modifier.height(16.dp))
-            Text(
-                text = "Assets",
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(bottom = 16.dp)
-            )
-        }
-
-        items(assets) { asset ->
-            AssetCard(asset, users, totalPortfolio)
+    ) { innerPadding ->
+        LazyColumn(
+            modifier = modifier
+                .fillMaxSize()
+                .padding(innerPadding)
+                .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            item { TotalPortfolioCard(totalPortfolio) }
+            item { Text("Users", fontSize = 20.sp, fontWeight = FontWeight.Bold) }
+            items(users) { user -> UserCard(user, totalPortfolio) }
+            item { Text("Assets", fontSize = 20.sp, fontWeight = FontWeight.Bold) }
+            items(assets) { asset -> AssetCard(asset, users, totalPortfolio) }
         }
     }
+
+    if (showUserDialog) {
+        AddUserDialog(
+            onDismiss = { showUserDialog = false },
+            onConfirm = { name, contribution ->
+                val user = User(name = name, contributionUSD = contribution)
+                viewModel.addUser(user)
+            }
+        )
+    }
+
+    if (showAssetDialog) {
+        AddAssetDialog(
+            onDismiss = { showAssetDialog = false },
+            onConfirm = { name, quantity, price ->
+                val asset = Asset(ticker = name, sharesOwned = quantity, pricePerShareUSD = price)
+                viewModel.addAsset(asset)
+            }
+        )
+    }
 }
+
 
 @Composable
 fun TotalPortfolioCard(total: Double) {
