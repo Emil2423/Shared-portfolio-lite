@@ -1,5 +1,7 @@
 package com.emil.sharedportfoliolite.data.dao
 
+
+import kotlinx.coroutines.flow.Flow
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -13,7 +15,7 @@ interface AssetDao {
     suspend fun insert(asset: Asset)
 
     @Query("SELECT * FROM assets")
-    suspend fun getAllAssets(): List<Asset>
+    fun getAllAssets(): Flow<List<Asset>>
 
     @Update
     suspend fun update(asset: Asset)

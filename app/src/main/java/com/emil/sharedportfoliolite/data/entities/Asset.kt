@@ -8,6 +8,7 @@ data class Asset (
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
     val ticker: String,
-    val pricePerShareUSD: Double,
+    val purchasePrice: Double,  // The price you bought it at (never changes)
+    val pricePerShareUSD: Double,  // Current/last known price (for display when offline)
     val sharesOwned: Double
 )

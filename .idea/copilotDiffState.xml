@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CopilotDiffPersistence">
+    <option name="pendingDiffs">
+      <map>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/emil/sharedportfoliolite/data/dao/UserDao.kt">
+          <value>
+            <PendingDiffInfo>
+              <option name="filePath" value="$PROJECT_DIR$/app/src/main/java/com/emil/sharedportfoliolite/data/dao/UserDao.kt" />
+              <option name="originalContent" value="package com.emil.sharedportfoliolite.data.dao&#10;&#10;import kotlinx.coroutines.flow.Flow&#10;import androidx.room.Dao&#10;import androidx.room.Delete&#10;import androidx.room.Insert&#10;import androidx.room.Query&#10;import androidx.room.Update&#10;import com.emil.sharedportfoliolite.data.entities.User&#10;&#10;@Dao&#10;interface UserDao {&#10;    @Insert&#10;    suspend fun insert(user: User)&#10;&#10;    @Update&#10;    suspend fun update(user: User)&#10;&#10;    @Query(&quot;SELECT * FROM users&quot;)&#10;    fun getAllUsers(): Flow&lt;List&lt;User&gt;&gt;&#10;&#10;    @Delete&#10;    suspend fun delete(user: User)&#10;}" />
+              <option name="updatedContent" value="package com.emil.sharedportfoliolite.data.dao&#10;&#10;import kotlinx.coroutines.flow.Flow&#10;import androidx.room.Dao&#10;import androidx.room.Delete&#10;import androidx.room.Insert&#10;import androidx.room.Query&#10;import androidx.room.Update&#10;import com.emil.sharedportfoliolite.data.entities.User&#10;&#10;@Dao&#10;interface UserDao {&#10;    @Insert&#10;    suspend fun insert(user: User)&#10;&#10;    @Update&#10;    suspend fun update(user: User)&#10;&#10;    @Query(&quot;SELECT * FROM users&quot;)&#10;    fun getAllUsers(): Flow&lt;List&lt;User&gt;&gt;&#10;&#10;    @Delete&#10;    suspend fun delete(user: User)&#10;}" />
+            </PendingDiffInfo>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/emil/sharedportfoliolite/data/entities/Asset.kt">
+          <value>
+            <PendingDiffInfo>
+              <option name="filePath" value="$PROJECT_DIR$/app/src/main/java/com/emil/sharedportfoliolite/data/entities/Asset.kt" />
+              <option name="originalContent" value="package com.emil.sharedportfoliolite.data.entities&#10;&#10;import androidx.room.Entity&#10;import androidx.room.PrimaryKey&#10;&#10;@Entity(tableName = &quot;assets&quot;)&#10;data class Asset (&#10;    @PrimaryKey(autoGenerate = true)&#10;    val id: Int = 0,&#10;    val ticker: String,&#10;    val purchasePrice: Double,  // The price you bought it at (never changes)&#10;    val pricePerShareUSD: Double,  // Current/last known price (for display when offline)&#10;    val sharesOwned: Double&#10;)&#10;" />
+              <option name="updatedContent" value="package com.emil.sharedportfoliolite.data.entities&#10;&#10;import androidx.room.Entity&#10;import androidx.room.PrimaryKey&#10;&#10;@Entity(tableName = &quot;assets&quot;)&#10;data class Asset (&#10;    @PrimaryKey(autoGenerate = true)&#10;    val id: Int = 0,&#10;    val ticker: String,&#10;    val purchasePrice: Double,  // The price you bought it at (never changes)&#10;    val pricePerShareUSD: Double,  // Current/last known price (for display when offline)&#10;    val sharesOwned: Double&#10;)" />
+            </PendingDiffInfo>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

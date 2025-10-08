@@ -15,7 +15,7 @@ fun AddAssetDialog(
 ) {
     var name by remember { mutableStateOf("") }
     var quantity by remember { mutableStateOf("") }
-    var price by remember { mutableStateOf("") }
+    var purchasePrice by remember { mutableStateOf("") }
 
     AlertDialog(
         onDismissRequest = onDismiss,
@@ -23,27 +23,33 @@ fun AddAssetDialog(
         text = {
             Column(
                 modifier = Modifier.fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(8.dp)
+                verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
                 OutlinedTextField(
                     value = name,
-                    onValueChange = { name = it },
-                    label = { Text("Asset Name") },
-                    modifier = Modifier.fillMaxWidth()
+                    onValueChange = { name = it.uppercase() },
+                    label = { Text("Asset Symbol (e.g., AAPL)") },
+                    modifier = Modifier.fillMaxWidth(),
+                    singleLine = true
                 )
+
                 OutlinedTextField(
                     value = quantity,
                     onValueChange = { quantity = it },
-                    label = { Text("Quantity") },
+                    label = { Text("Quantity (Shares)") },
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
+                    singleLine = true
                 )
+
                 OutlinedTextField(
-                    value = price,
-                    onValueChange = { price = it },
-                    label = { Text("Price per Unit ($)") },
+                    value = purchasePrice,
+                    onValueChange = { purchasePrice = it },
+                    label = { Text("Purchase Price per Share ($)") },
+                    supportingText = { Text("Enter the price you bought it at") },
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
+                    singleLine = true
                 )
             }
         },
@@ -51,9 +57,9 @@ fun AddAssetDialog(
             TextButton(
                 onClick = {
                     val qty = quantity.toDoubleOrNull()
-                    val prc = price.toDoubleOrNull()
+                    val prc = purchasePrice.toDoubleOrNull()
                     if (name.isNotBlank() && qty != null && qty > 0 && prc != null && prc > 0) {
-                        onConfirm(name, qty, prc)
+                        onConfirm(name.uppercase(), qty, prc)
                         onDismiss()
                     }
                 }
